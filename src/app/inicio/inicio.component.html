@@ -1,0 +1,58 @@
+<div *ngIf="showRegisterMessage" class="register-message">
+  <p>¡Necesitas registrarte primero para poder ver tu información y seleccionar Pokémon!</p>
+  <a routerLink="/registro">Haz clic aquí para registrarte</a>
+</div>
+
+<div *ngIf="!showRegisterMessage" class="welcome-container">
+  <h1>Bienvenido, {{ nombre || 'Invitado' }}!</h1>
+  <p>Edad: {{ edad }} años</p>
+  <p *ngIf="numeroIdentidad && numeroIdentidad !== 'No aplicable'">Identidad: {{ numeroIdentidad }}</p>
+  
+  <input
+    type="text"
+    [(ngModel)]="searchText"
+    (keyup.enter)="searchPokemon()"
+    placeholder="Buscar por nombre o ID"
+    class="search-input"
+  />
+  <button (click)="searchPokemon()">Buscar</button>
+
+  <div *ngIf="isSearching">
+    <h2>Resultado de Búsqueda</h2>
+
+    <div *ngIf="searchResult" class="pokemon-container">
+      <div
+        class="pokemon-card"
+        (click)="selectFromSearch(searchResult)"
+        [class.selected]="selectedPokemons.includes(searchResult)"
+      >
+        <p>{{ searchResult.name | uppercase }}</p>
+        <img *ngIf="searchResult.front_default" [src]="searchResult.front_default" />
+      </div>
+    </div>
+
+    <p *ngIf="!searchResult">No se encontró ningún Pokémon con ese nombre o ID.</p>
+  </div>
+
+  <div *ngIf="!isSearching">
+    <h2>Pokémons Iniciales</h2>
+
+    <div *ngIf="showMaxMessage" class="max-selection-message">
+      <p>Ya tienes 3 Pokémon seleccionados. No puedes agregar más.</p>
+    </div>
+
+    <div class="pokemon-container">
+      <div
+        class="pokemon-card"
+        *ngFor="let pokemon of pokemons"
+        (click)="toggleSelect(pokemon)"
+        [class.selected]="selectedPokemons.includes(pokemon)"
+      >
+        <p>{{ pokemon.name | uppercase }}</p>
+        <img *ngIf="pokemon.front_default" [src]="pokemon.front_default" />
+      </div>
+    </div>
+
+    <button *ngIf="selectedPokemons.length === 3" (click)="goToEquipo()">Ir a mi equipo</button>
+  </div>
+</div>

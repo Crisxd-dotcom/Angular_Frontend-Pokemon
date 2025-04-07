@@ -1,0 +1,74 @@
+.equipo-container {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .pokemon-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .pokemon-card {
+    border: 2px solid #ccc;
+    padding: 10px;
+    margin: 10px;
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .pokemon-card:hover {
+    transform: scale(1.05);
+  }
+  
+  button {
+    padding: 10px 20px;
+    margin-top: 20px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  button:hover {
+    background-color: #45a049;
+  }
+  
+  .register-message {
+    background-color: #ffcccc;
+    color: #ff0000;
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ff0000;
+    margin: 20px 0;
+  }
+  
+  .register-message a {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .register-message a:hover {
+    text-decoration: underline;
+  }
+  
+  .stats-container {
+    background-color: #f4f4f4;
+    padding: 0.5rem;
+    border-radius: 8px;
+    margin-top: 10px;
+  }
+  
+  .stats-container ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+  }
+  
+  .stats-container li {
+    font-size: 14px;
+  }
+  

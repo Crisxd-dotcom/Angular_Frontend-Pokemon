@@ -1,0 +1,25 @@
+<form [formGroup]="registroForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="nombre">Nombre*</label>
+    <input id="nombre" formControlName="nombre" required />
+  </div>
+
+  <div>
+    <label for="pasatiempo">Pasatiempo Favorito</label>
+    <input id="pasatiempo" formControlName="pasatiempo" />
+  </div>
+
+  <div>
+    <label for="fechaNacimiento">Fecha de nacimiento* </label>
+    <input id="fechaNacimiento" type="date" formControlName="fechaNacimiento" required />
+  </div>
+
+  <div *ngIf="isMayorEdad">
+    <label for="numeroIdentidad">Número de identidad*</label>
+    <input id="numeroIdentidad" formControlName="numeroIdentidad" (input)="onNumeroIdentidadChange($event)" />
+  </div>
+
+  <div>
+    <button type="submit" [disabled]="!registroForm.valid">Registrar</button>
+  </div>
+</form>

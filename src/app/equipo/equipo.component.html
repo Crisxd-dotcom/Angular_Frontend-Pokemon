@@ -1,0 +1,36 @@
+<div *ngIf="showRegisterMessage" class="register-message">
+  <p>¡Necesitas registrarte primero para poder ver tu información y seleccionar Pokémon!</p>
+  <a routerLink="/registro">Haz clic aquí para registrarte</a>
+</div>
+
+<div *ngIf="!showRegisterMessage" class="equipo-container">
+  <h1>Mi Equipo de Pokémons</h1>
+  <p>Nombre: {{ nombre }}</p>
+  <p>Edad: {{ edad }}</p>
+  <p>Fecha de Nacimiento: {{ fechaNacimiento }}</p>
+  <p>Id: {{ numeroIdentidad }}</p>
+
+  <h2>Pokémons Seleccionados</h2>
+  <div class="pokemon-container">
+    <div class="pokemon-card" *ngFor="let pokemon of selectedPokemons">
+      <p>{{ pokemon.name | uppercase }}</p>
+      <img *ngIf="pokemon.front_default" [src]="pokemon.front_default" alt="{{ pokemon.name }} front" />
+
+      <div class="stats-container" *ngIf="pokemon.stats">
+        <ul>
+          <li *ngFor="let stat of pokemon.stats">
+            {{ (stat.stat ? stat.stat.name : stat.name) | titlecase }}: 
+            {{ stat.base_stat || stat.base }}
+          </li>
+        </ul>
+      </div>
+      
+      
+    </div>
+  </div>
+
+  <button (click)="goBackToInicio()">Volver a la lista de Pokémon</button>
+  <button (click)="goEditarPerfil()">Editar Perfil</button>
+</div>
+
+
