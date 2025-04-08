@@ -10,6 +10,9 @@ import { Router } from '@angular/router';
 export class RegistroComponent implements OnInit {
   registroForm: FormGroup;
   isMayorEdad: boolean = false;
+  imagenPreview: string | null = null;
+  nombreImagen: string | null = null;
+
 
   constructor(private fb: FormBuilder, private router: Router) {}
 
@@ -18,28 +21,31 @@ export class RegistroComponent implements OnInit {
     localStorage.removeItem('edad');
     localStorage.removeItem('numeroIdentidad');
     localStorage.removeItem('pasatiempo');
-    localStorage.removeItem('fechaNacimiento')
+    localStorage.removeItem('fechaNacimiento');
     localStorage.removeItem('selectedPokemons');
-    
-
+  
     this.registroForm = this.fb.group({
       nombre: ['', Validators.required],
       fechaNacimiento: ['', Validators.required],
-      numeroIdentidad: ['', this.isMayorEdad ? Validators.required : []],
-      pasatiempo:[]
+      numeroIdentidad: [''],
+      pasatiempo: ['']
     });
-
+  
     const fechaNacimientoControl = this.registroForm.get('fechaNacimiento');
     if (fechaNacimientoControl) {
       fechaNacimientoControl.valueChanges.subscribe((fecha: string) => {
         if (fecha) {
           const edad = this.calcularEdad(fecha);
           this.isMayorEdad = edad >= 18;
+  
           const numeroIdentidadControl = this.registroForm.get('numeroIdentidad');
           if (numeroIdentidadControl) {
-            if (this.isMayorEdad) {
-              numeroIdentidadControl.setValidators([Validators.required]);
-            } else {
+            if (this.isMayorEdad) {              
+              numeroIdentidadControl.setValidators([
+                Validators.required,
+                this.validarNumeroIdentidad.bind(this)
+              ]);
+            } else {              
               numeroIdentidadControl.clearValidators();
             }
             numeroIdentidadControl.updateValueAndValidity();
@@ -50,6 +56,21 @@ export class RegistroComponent implements OnInit {
       });
     }
   }
+  onFileSelected(event: any): void {
+    const file: File = event.target.files[0];
+    if (file) {
+      this.nombreImagen = file.name;
+  
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imagenPreview = reader.result as string;
+        localStorage.setItem('imagenPerfil', this.imagenPreview!);
+        localStorage.setItem('nombreImagen', this.nombreImagen!);
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+  
 
   calcularEdad(fechaNacimiento: string): number {
     const nacimiento = new Date(fechaNacimiento);
@@ -85,6 +106,15 @@ export class RegistroComponent implements OnInit {
     }
   }
 
+  validarNumeroIdentidad(control: any): { [key: string]: boolean } | null {
+    const valor = control.value;
+    if (valor && valor.length !== 15) {
+      return { longitudInvalida: true };
+    }
+    return null;
+  }
+  
+
   onSubmit(): void {
     if (this.registroForm.valid) {
       const nombre = this.registroForm.value.nombre;
@@ -95,7 +125,7 @@ export class RegistroComponent implements OnInit {
 
       
       localStorage.setItem('nombre', nombre);
-      localStorage.setItem('nombre', pasatiempo);
+      localStorage.setItem('pasatiempo', pasatiempo);
       localStorage.setItem('fechaNacimiento',fechaNacimiento)
       localStorage.setItem('edad', edad.toString());
       localStorage.setItem('numeroIdentidad', this.isMayorEdad ? numeroIdentidad : 'No aplicable');

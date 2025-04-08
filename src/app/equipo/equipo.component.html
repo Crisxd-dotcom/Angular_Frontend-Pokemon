@@ -1,36 +1,81 @@
-<div *ngIf="showRegisterMessage" class="register-message">
-  <p>¡Necesitas registrarte primero para poder ver tu información y seleccionar Pokémon!</p>
-  <a routerLink="/registro">Haz clic aquí para registrarte</a>
-</div>
-
-<div *ngIf="!showRegisterMessage" class="equipo-container">
-  <h1>Mi Equipo de Pokémons</h1>
-  <p>Nombre: {{ nombre }}</p>
-  <p>Edad: {{ edad }}</p>
-  <p>Fecha de Nacimiento: {{ fechaNacimiento }}</p>
-  <p>Id: {{ numeroIdentidad }}</p>
-
-  <h2>Pokémons Seleccionados</h2>
-  <div class="pokemon-container">
-    <div class="pokemon-card" *ngFor="let pokemon of selectedPokemons">
-      <p>{{ pokemon.name | uppercase }}</p>
-      <img *ngIf="pokemon.front_default" [src]="pokemon.front_default" alt="{{ pokemon.name }} front" />
-
-      <div class="stats-container" *ngIf="pokemon.stats">
-        <ul>
-          <li *ngFor="let stat of pokemon.stats">
-            {{ (stat.stat ? stat.stat.name : stat.name) | titlecase }}: 
-            {{ stat.base_stat || stat.base }}
-          </li>
-        </ul>
+<div class="center-wrapper">
+  <div  *ngIf="!showRegisterMessage" class="container">
+    <div class="left">
+      <img [src]="imagenPerfil" width="160" height="160" />
+      <h2>{{ nombre || 'Invitado' }} <button (click)="goEditarPerfil()"  class="edit-btn">✏️ Editar perfil</button></h2>
+      <div class="filename">{{ nombreImagen }}</div>
+      <div class="info">
+        <p><b>Pasatiempo:</b> {{pasatiempo}}</p>
+        <p><b>Edad:</b> {{ edad }} años</p>
+        <p *ngIf="numeroIdentidad && numeroIdentidad !== 'No aplicable'">
+          Identidad: {{ numeroIdentidad }}
+        </p>
       </div>
-      
-      
+    </div>
+    <div class="pokemon-section">
+      <div class="title-row">
+        <h2>Mis Pokémon</h2>
+        <button  (click)="goBackToInicio()" class="edit-btn">✏️ Editar Equipo</button>
+      </div>
+  
+      <div class="pokemon-card" *ngFor="let pokemon of selectedPokemons">
+        <img *ngIf="pokemon.front_default" [src]="pokemon.front_default" alt="{{ pokemon.name }} front"/>
+        <div class="pokemon-info">
+          <h3>{{ pokemon.name | uppercase }}</h3>
+          <p>{{ pokemon.type | uppercase   }}</p>
+          <div class="stats">
+            <div class="stat-row">
+              <div class="stat-label">HP</div>
+              <div class="stat-bar-container">
+                <div class="stat-bar-fill" [style.width]="getStatWidth(pokemon, 'hp')"></div>
+              </div>
+              <div class="stat-value">{{ getStatValue(pokemon, 'hp') }}</div>
+            </div>
+            
+          
+            <div class="stat-row">
+              <div class="stat-label">Ataque</div>
+              <div class="stat-bar-container">
+                <div class="stat-bar-fill" [style.width]="getStatWidth(pokemon, 'attack')"></div>
+              </div>
+              <div class="stat-value">{{ getStatValue(pokemon, 'attack') }}</div>
+            </div>
+          
+            <div class="stat-row">
+              <div class="stat-label">Defensa</div>
+              <div class="stat-bar-container">
+                <div class="stat-bar-fill" [style.width]="getStatWidth(pokemon, 'defense')"></div>
+              </div>
+              <div class="stat-value">{{ getStatValue(pokemon, 'defense') }}</div>
+            </div>
+          
+            <div class="stat-row">
+              <div class="stat-label">Ataque Especial</div>
+              <div class="stat-bar-container">
+                <div class="stat-bar-fill" [style.width]="getStatWidth(pokemon, 'special-attack')"></div>
+              </div>
+              <div class="stat-value">{{ getStatValue(pokemon, 'special-attack') }}</div>
+            </div>
+          
+            <div class="stat-row">
+              <div class="stat-label">Defensa Especial</div>
+              <div class="stat-bar-container">
+                <div class="stat-bar-fill" [style.width]="getStatWidth(pokemon, 'special-defense')"></div>
+              </div>
+              <div class="stat-value">{{ getStatValue(pokemon, 'special-defense') }}</div>
+            </div>
+          
+            <div class="stat-row">
+              <div class="stat-label">Velocidad</div>
+              <div class="stat-bar-container">
+                <div class="stat-bar-fill" [style.width]="getStatWidth(pokemon, 'speed')"></div>
+              </div>
+              <div class="stat-value">{{ getStatValue(pokemon, 'speed') }}</div>
+            </div>
+          </div>
+                        
+        </div>
+      </div>
     </div>
   </div>
-
-  <button (click)="goBackToInicio()">Volver a la lista de Pokémon</button>
-  <button (click)="goEditarPerfil()">Editar Perfil</button>
 </div>
-
-

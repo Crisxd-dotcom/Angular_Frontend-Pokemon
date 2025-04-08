@@ -1,25 +1,45 @@
-<form [formGroup]="registroForm" (ngSubmit)="onSubmit()">
-  <div>
-    <label for="nombre">Nombre*</label>
-    <input id="nombre" formControlName="nombre" required />
+<div class="container">
+  <div class="left">
+    <h3>Imagen perfil</h3>
+    <img [src]="imagenPreview || 'https://via.placeholder.com/180'" width="180" height="180"/>
+    <div class="filename">{{ nombreImagen || 'Sin archivo seleccionado' }}</div>
+    <input type="file" (change)="onFileSelected($event)" accept="image/*" required/>
   </div>
+  
 
-  <div>
-    <label for="pasatiempo">Pasatiempo Favorito</label>
-    <input id="pasatiempo" formControlName="pasatiempo" />
+  <div class="right">
+    <h2>Tu información</h2>
+      <p>Completa la siguiente información para completar tu perfil</p>
+      <form [formGroup]="registroForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="nombre">Nombre*</label>
+          <input id="nombre" formControlName="nombre" required />
+        </div>
+      
+        <div class="form-group">
+          <label for="pasatiempo">Pasatiempo Favorito</label>
+          <input id="pasatiempo" formControlName="pasatiempo" />
+        </div>
+      
+        <div class="form-group">
+          <label for="fechaNacimiento">Fecha de nacimiento* </label>
+          <input id="fechaNacimiento" type="date" formControlName="fechaNacimiento" required />
+        </div>
+      
+        <div  class="form-group" *ngIf="isMayorEdad">
+          <label for="numeroIdentidad">Número de identidad*</label>
+          <input id="numeroIdentidad" formControlName="numeroIdentidad" (input)="onNumeroIdentidadChange($event)" />
+          
+        </div>
+      
+        <div class="form-group">
+          <button type="submit" [disabled]="!registroForm.valid">Registrar</button>
+        </div>
+      </form>
   </div>
+</div>
 
-  <div>
-    <label for="fechaNacimiento">Fecha de nacimiento* </label>
-    <input id="fechaNacimiento" type="date" formControlName="fechaNacimiento" required />
-  </div>
 
-  <div *ngIf="isMayorEdad">
-    <label for="numeroIdentidad">Número de identidad*</label>
-    <input id="numeroIdentidad" formControlName="numeroIdentidad" (input)="onNumeroIdentidadChange($event)" />
-  </div>
 
-  <div>
-    <button type="submit" [disabled]="!registroForm.valid">Registrar</button>
-  </div>
-</form>
+
+

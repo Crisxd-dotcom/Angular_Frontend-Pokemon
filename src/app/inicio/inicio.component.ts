@@ -10,8 +10,10 @@ import { Router } from '@angular/router';
 })
 export class InicioComponent implements OnInit {
   nombre: string = '';
+  pasatiempo: string = '';
   numeroIdentidad: string = '';
   edad: number = 0; 
+  imagenPerfil: string = '';
 
   pokemons: any[] = [];
   selectedPokemons: any[] = [];
@@ -25,9 +27,14 @@ export class InicioComponent implements OnInit {
 
   ngOnInit(): void {
     this.nombre = localStorage.getItem('nombre') || '';
+    this.pasatiempo = localStorage.getItem('pasatiempo') || '';
     this.edad = parseInt(localStorage.getItem('edad') || '0', 10);
     this.numeroIdentidad = localStorage.getItem('numeroIdentidad') || '';
-    if (!this.nombre || !this.edad || this.edad <= 0 || this.nombre === '') {
+    this.imagenPerfil = localStorage.getItem('imagenPerfil') || 'https://via.placeholder.com/160';
+
+    localStorage.removeItem('selectedPokemons');
+
+    if (!this.nombre || !this.edad || this.edad <= 0 || this.nombre === ''|| this.pasatiempo === '') {
       this.showRegisterMessage = true;  
     } else {
       this.showRegisterMessage = false;  
@@ -61,11 +68,14 @@ export class InicioComponent implements OnInit {
           id: pokemonDetail.id,
           name: pokemonDetail.name,
           front_default: pokemonDetail.sprites.front_default,
+          type: pokemonDetail.types.map((t: any) => t.type.name).join(', '),
           stats: pokemonDetail.stats.map((s: any) => ({
             base_stat: s.base_stat,
             stat: { name: s.stat.name }
           }))
+                
         }));
+        
         
   
         this.selectedPokemons = this.pokemons.filter(pokemon =>
@@ -73,8 +83,7 @@ export class InicioComponent implements OnInit {
         );
       });
     });
-  }
-  
+  }  
 
   searchPokemon(): void {
     const term = this.searchText.trim().toLowerCase();
@@ -91,11 +100,13 @@ export class InicioComponent implements OnInit {
           id: pokemonDetail.id,
           name: pokemonDetail.name,
           front_default: pokemonDetail.sprites.front_default,
+          type: pokemonDetail.types.map((t: any) => t.type.name).join(', '),
           stats: pokemonDetail.stats.map((s: any) => ({
             name: s.stat.name,
             base: s.base_stat
           }))
         };
+        
         
       },
       error: () => {
@@ -122,15 +133,34 @@ export class InicioComponent implements OnInit {
     localStorage.setItem('selectedPokemons', JSON.stringify(this.selectedPokemons));
   }
   
+  getStatWidth(pokemon: any, statName: string): string {
+    const statObj = pokemon.stats.find((s: any) => s.stat.name === statName);
+    if (!statObj) return '0%';
+  
+    const maxValues: { [key: string]: number } = {
+      'hp': 255,
+      'attack': 190,
+      'defense': 230,
+      'special-attack': 194,
+      'special-defense': 230,
+      'speed': 180
+    };
+  
+    const max = maxValues[statName] || 255;
+    const percent = Math.floor((statObj.base_stat / max) * 100);
+    return `${percent}%`;
+  }
+
   
   selectFromSearch(pokemon: any): void {
     this.toggleSelect(pokemon);
-    this.searchResult = null; 
-    this.isSearching = false; 
   }
+  
+  
 
   goToEquipo(): void {
     localStorage.setItem('nombre', this.nombre);
+    localStorage.setItem('pasatiempo', this.pasatiempo);
     localStorage.setItem('edad', this.edad.toString());
     localStorage.setItem('selectedPokemons', JSON.stringify(this.selectedPokemons));
   
