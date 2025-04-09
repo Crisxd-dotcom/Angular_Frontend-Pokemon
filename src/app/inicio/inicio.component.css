@@ -48,26 +48,37 @@ body {
   height: 100vh;
 }
 
+.center-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px; 
+  box-sizing: border-box;
+}
 .container {
   display: flex;
   background-color: white;
   border-radius: 20px;
   width: 95%;
   max-width: 1100px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.1);
   overflow: hidden;
+  max-height: 90vh;
+  
 }
 
-/* Parte izquierda - usuario */
 .left {
   background-color: #facc15;
-  width: 35%;
+  width: 55%;
   padding: 40px 30px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   color: #1e3a8a;
+  margin: 20px 0;
+  border-radius: 20px; 
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1); 
 }
 
 .left img {
@@ -93,6 +104,24 @@ body {
   display: inline-block;
   width: 100px;
 }
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+  gap: 10px;
+}
+
+.label {
+  font-weight: bold;
+  min-width: 100px;
+  text-align: left;
+}
+
+.value {
+  text-align: right;
+  flex-grow: 1;
+}
+
 
 /* Parte derecha - selección */
 .right {
@@ -162,7 +191,7 @@ body {
 .btn {
   width: 100%;
   padding: 12px;
-  background-color: #d1d5db;
+  background-color: #2a4061;
   border: none;
   border-radius: 8px;
   font-weight: bold;
@@ -170,6 +199,14 @@ body {
   cursor: pointer;
 }
 
-.btn:hover {
-  background-color: #9ca3af;
+button.btn:disabled {
+  width: 100%;
+  padding: 12px;
+  background-color: #d1d5db;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  color: white;
+  cursor: not-allowed;
 }
+

@@ -1,3 +1,4 @@
+<div class="center-wrapper">
 <div class="container">
   <div class="left">
     <h3>Imagen perfil</h3>
@@ -17,8 +18,11 @@
         </div>
       
         <div class="form-group">
-          <label for="pasatiempo">Pasatiempo Favorito</label>
-          <input id="pasatiempo" formControlName="pasatiempo" />
+          <label for="pasatiempo">Pasatiempo</label>
+          <select id="pasatiempo" formControlName="pasatiempo" class="form-control">
+            <option value="">Seleccione un pasatiempo</option>
+            <option *ngFor="let hobbie of hobbies" [value]="hobbie">{{ hobbie }}</option>
+          </select>          
         </div>
       
         <div class="form-group">
@@ -33,12 +37,12 @@
         </div>
       
         <div class="form-group">
-          <button type="submit" [disabled]="!registroForm.valid">Registrar</button>
+          <button class="btn"  type="submit" [disabled]="!registroForm.valid || !imagenPreview">Registrar</button>
         </div>
       </form>
   </div>
 </div>
-
+</div>
 
 
 

@@ -1,27 +1,42 @@
-<div class="container">
-  <div class="left">
-    <h3>Imagen perfil</h3>
-    <img [src]="imagenPerfil" width="160" height="160" />
-    <div class="filename">{{ nombreImagen || 'Sin archivo seleccionado' }}</div>
-    <input type="file" (change)="onFileSelected($event)" accept="image/*" />
-  </div>
+<div class="center-wrapper">
+  <div class="container">
+    <div class="left">
+      <h3>Imagen perfil</h3>
+      <img [src]="imagenPerfil" width="160" height="160" />
+      <div class="filename">{{ nombreImagen || 'Sin archivo seleccionado' }}</div>
+      <input type="file" (change)="onFileSelected($event)" accept="image/*" />
+    </div>
 
-  <div class="right">
-    <h2>Editar Perfil</h2>      
-      <form  (ngSubmit)="onGuardar()">
+    <div class="right">
+      <h2>Editar Perfil</h2>
+      <form [formGroup]="perfilForm" (ngSubmit)="onGuardar()">
         <div class="form-group">
-          <label for="nombre">Nombre:</label>
-          <input type="text" id="nombre" [(ngModel)]="nombre" name="nombre" required />
+          <label for="nombre">Nombre*</label>
+          <input id="nombre" formControlName="nombre" />
         </div>
-      
+
         <div class="form-group">
-          <label for="pasatiempo">pasatiempo:</label>
-          <input type="text" id="pasatiempo" [(ngModel)]="pasatiempo" name="pasatiempo" required />
+          <label for="pasatiempo">Pasatiempo</label>
+          <select id="pasatiempo" formControlName="pasatiempo" class="form-control">
+            <option value="">Seleccione un pasatiempo</option>
+            <option *ngFor="let hobbie of hobbies" [value]="hobbie">{{ hobbie }}</option>
+          </select>          
         </div>
-          
+
         <div class="form-group">
-          <button type="submit">Guardar</button>
+          <label for="fechaNacimiento">Fecha de nacimiento*</label>
+          <input type="date" id="fechaNacimiento" formControlName="fechaNacimiento" />
+        </div>
+
+        <div class="form-group" *ngIf="isMayorEdad">
+          <label for="numeroIdentidad">Número de identidad*</label>
+          <input id="numeroIdentidad" formControlName="numeroIdentidad" (input)="onNumeroIdentidadChange($event)" />
+        </div>
+
+        <div class="form-group">
+          <button  class="btn" type="submit" [disabled]="!perfilForm.valid">Guardar</button>
         </div>
       </form>
+    </div>
   </div>
 </div>

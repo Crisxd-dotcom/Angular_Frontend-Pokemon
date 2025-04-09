@@ -12,7 +12,15 @@ export class RegistroComponent implements OnInit {
   isMayorEdad: boolean = false;
   imagenPreview: string | null = null;
   nombreImagen: string | null = null;
-
+  hobbies: string[] = [
+    'Leer',
+    'Jugar videojuegos',
+    'Hacer ejercicio',
+    'Cocinar',
+    'Ver películas',
+    'Pasear al aire libre',
+    'Otro'
+  ];
 
   constructor(private fb: FormBuilder, private router: Router) {}
 
@@ -23,6 +31,8 @@ export class RegistroComponent implements OnInit {
     localStorage.removeItem('pasatiempo');
     localStorage.removeItem('fechaNacimiento');
     localStorage.removeItem('selectedPokemons');
+    localStorage.removeItem('imagenPerfil');
+    localStorage.removeItem('nombreImagen');
   
     this.registroForm = this.fb.group({
       nombre: ['', Validators.required],
