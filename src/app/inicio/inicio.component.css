@@ -199,6 +199,17 @@ body {
   cursor: pointer;
 }
 
+.btn-reg{
+  width: 100%;
+  padding: 12px;
+  background-color: #2a4061;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+}
+
 button.btn:disabled {
   width: 100%;
   padding: 12px;

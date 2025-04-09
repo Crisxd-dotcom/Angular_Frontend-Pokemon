@@ -12,6 +12,7 @@ export class EditarPerfilComponent implements OnInit {
   isMayorEdad: boolean = false;
   imagenPerfil: string | null = null;
   nombreImagen: string | null = null;
+  showRegisterMessage: boolean = false; 
   hobbies: string[] = [
     'Leer',
     'Jugar videojuegos',
@@ -45,6 +46,12 @@ export class EditarPerfilComponent implements OnInit {
 
     this.imagenPerfil = localStorage.getItem('imagenPerfil') || 'https://via.placeholder.com/160';
     this.nombreImagen = localStorage.getItem('nombreImagen') || null;
+
+    if (!localStorage.getItem('nombre') ) {
+      this.showRegisterMessage = true;  
+    } else {
+      this.showRegisterMessage = false;  
+    }
 
     const fechaNacimientoControl = this.perfilForm.get('fechaNacimiento');
     if (fechaNacimientoControl) {

@@ -70,7 +70,16 @@ body {
   cursor: pointer;
   text-decoration: none;
 }
-
+.btn-reg{
+  width: 100%;
+  padding: 12px;
+  background-color: #2a4061;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+}
 .edit-team-btn{
  background-color: #45a049;
   color: #fff;

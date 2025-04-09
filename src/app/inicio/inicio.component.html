@@ -1,67 +1,76 @@
+
 <div class="center-wrapper">
-  <div class="container">
-    <div class="left">
-      <img [src]="imagenPerfil" width="160" height="160" />
-      <h2>{{ nombre || 'Invitado' }}</h2>
-      <div class="filename">{{ nombreImagen }}</div>
-      <div class="info">
-        <div class="info-row">
-          <span class="label">Pasatiempo:</span>
-          <span class="value">{{ pasatiempo }}</span>
-        </div>
-        <div class="info-row">
-          <span class="label">Edad:</span>
-          <span class="value">{{ edad }} años</span>
-        </div>
-        <div class="info-row" *ngIf="numeroIdentidad && numeroIdentidad !== 'No aplicable'">
-          <span class="label">Identidad:</span>
-          <span class="value">{{ numeroIdentidad }}</span>
-        </div>
-      </div>
-      
-    </div>
-
-    <div class="right">
-      <h1>¡Ya casi terminamos!</h1>
-      <p>Selecciona 3 Pokémon para que sean parte de tu equipo</p>
-      <div *ngIf="showMaxMessage" class="max-selection-message">
-        <p>Ya tienes 3 Pokémon seleccionados. No puedes agregar más.</p>
-      </div>
-      <div class="search-box">
-        <input type="text" [(ngModel)]="searchText" (keyup.enter)="searchPokemon()"
-          placeholder="🔍 Buscar por índice, nombre..." />
-
-        <div *ngIf="isSearching">
-          <h2>Resultado de Búsqueda</h2>
-
-          <div *ngIf="searchResult" class="pokemon-container">
-            <div class="pokemon-card" (click)="selectFromSearch(searchResult)"
-              [class.selected]="selectedPokemons.includes(searchResult)">
-              <p>{{ searchResult.name | uppercase }}</p>
-              <img *ngIf="searchResult.front_default" [src]="searchResult.front_default" />
-            </div>
+  <div *ngIf="showRegisterMessage" class="register-warning">
+    <h2>🔒 Necesitas registrarte primero</h2>
+    <p>Por favor completa tu perfil antes de seleccionar tu equipo Pokémon.</p>
+    <button class="btn-reg" (click)="router.navigate(['/registro'])">Ir al registro</button>
+  </div>
+  <div *ngIf="!showRegisterMessage">
+    <div class="container">
+      <div class="left">
+        <img [src]="imagenPerfil" width="160" height="160" />
+        <h2>{{ nombre || 'Invitado' }}</h2>
+        <div class="filename">{{ nombreImagen }}</div>
+        <div class="info">
+          <div class="info-row">
+            <span class="label">Pasatiempo:</span>
+            <span class="value">{{ pasatiempo }}</span>
           </div>
-
-          <p *ngIf="!searchResult">No se encontró ningún Pokémon con ese nombre o ID.</p>
+          <div class="info-row">
+            <span class="label">Edad:</span>
+            <span class="value">{{ edad }} años</span>
+          </div>
+          <div class="info-row" *ngIf="numeroIdentidad && numeroIdentidad !== 'No aplicable'">
+            <span class="label">Identidad:</span>
+            <span class="value">{{ numeroIdentidad }}</span>
+          </div>
         </div>
-
-
-
+        
       </div>
-    </div>
-    <div class="pokemon-grid">
-      <div class="pokemon-card" *ngFor="let pokemon of pokemons" 
-        (click)="toggleSelect(pokemon)"
-        [class.selected]="selectedPokemons.includes(pokemon)">
-        <p>{{ pokemon.name | uppercase }}</p>
-        <img *ngIf="pokemon.front_default" [src]="pokemon.front_default" />
+  
+      
+      <div class="right">
+        <h1>¡Ya casi terminamos!</h1>
+        <p>Selecciona 3 Pokémon para que sean parte de tu equipo</p>
+        <div *ngIf="showMaxMessage" class="max-selection-message">
+          <p>Ya tienes 3 Pokémon seleccionados. No puedes agregar más.</p>
+        </div>
+        <div class="search-box">
+          <input type="text" [(ngModel)]="searchText" (keyup.enter)="searchPokemon()"
+            placeholder="🔍 Buscar por índice, nombre..." />
+  
+          <div *ngIf="isSearching">
+            <h2>Resultado de Búsqueda</h2>
+  
+            <div *ngIf="searchResult" class="pokemon-container">
+              <div class="pokemon-card" (click)="selectFromSearch(searchResult)"
+                [class.selected]="selectedPokemons.includes(searchResult)">
+                <p>{{ searchResult.name | uppercase }}</p>
+                <img *ngIf="searchResult.front_default" [src]="searchResult.front_default" />
+              </div>
+            </div>
+  
+            <p *ngIf="!searchResult">No se encontró ningún Pokémon con ese nombre o ID.</p>
+          </div>
+  
+  
+  
+        </div>
       </div>
-      <button class="btn" 
-        (click)="goToEquipo()" 
-        [disabled]="selectedPokemons.length !== 3">
-  Guardar
-</button>
-
+      <div class="pokemon-grid">
+        <div class="pokemon-card" *ngFor="let pokemon of pokemons" 
+          (click)="toggleSelect(pokemon)"
+          [class.selected]="selectedPokemons.includes(pokemon)">
+          <p>{{ pokemon.name | uppercase }}</p>
+          <img *ngIf="pokemon.front_default" [src]="pokemon.front_default" />
+        </div>
+        <button class="btn" 
+          (click)="goToEquipo()" 
+          [disabled]="selectedPokemons.length !== 3">
+    Guardar
+  </button>
+  
+      </div>
     </div>
   </div>
 </div>

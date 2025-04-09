@@ -1,5 +1,10 @@
 <div class="center-wrapper">
-  <div class="container">
+  <div *ngIf="showRegisterMessage" class="register-warning">
+    <h2>🔒 Necesitas registrarte primero</h2>
+    <p>Por favor completa tu perfil antes de seleccionar tu equipo Pokémon.</p>
+    <button class="btn-reg" (click)="router.navigate(['/registro'])">Ir al registro</button>
+  </div>
+  <div  *ngIf="!showRegisterMessage" class="container">
     <div class="left">
       <h3>Imagen perfil</h3>
       <img [src]="imagenPerfil" width="160" height="160" />
