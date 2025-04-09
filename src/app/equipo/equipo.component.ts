@@ -29,7 +29,7 @@ export class EquipoComponent implements OnInit {
 
     
   
-    if (!this.nombre || !this.edad || this.edad <= 0 || this.nombre === ''|| this.pasatiempo === '') {
+    if (!this.nombre || !this.edad || this.edad <= 0 || this.nombre === '') {
       this.showRegisterMessage = true;
     } else {
       this.showRegisterMessage = false;

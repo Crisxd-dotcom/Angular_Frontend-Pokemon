@@ -34,7 +34,7 @@ export class InicioComponent implements OnInit {
 
     localStorage.removeItem('selectedPokemons');
 
-    if (!this.nombre || !this.edad || this.edad <= 0 || this.nombre === ''|| this.pasatiempo === '') {
+    if (!this.nombre || !this.edad || this.edad <= 0 || this.nombre === '') {
       this.showRegisterMessage = true;  
     } else {
       this.showRegisterMessage = false;  

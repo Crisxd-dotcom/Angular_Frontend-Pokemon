@@ -35,7 +35,7 @@ export class EditarPerfilComponent implements OnInit {
 
     this.perfilForm = this.fb.group({
       nombre: [localStorage.getItem('nombre') || '', Validators.required],
-      pasatiempo: [localStorage.getItem('pasatiempo') || '', Validators.required],
+      pasatiempo: [localStorage.getItem('pasatiempo') || ''],
       fechaNacimiento: [storedFecha, Validators.required],
       numeroIdentidad: [
         localStorage.getItem('numeroIdentidad') || '',
